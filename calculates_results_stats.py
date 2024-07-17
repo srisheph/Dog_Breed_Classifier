@@ -71,7 +71,7 @@ def calculates_results_stats(results_dic):
     # Replace None with the results_stats_dic dictionary that you created with 
     # this function 
     results_stats= {
-        'n_images': len(results),
+        'n_images': len(results_dic),
         'n_dogs_img': 0,
         'n_correct_dogs': 0,
         'n_match': 0,
@@ -87,7 +87,7 @@ def calculates_results_stats(results_dic):
             results_stats['n_dogs_img'] += 1
             if results_dic[key][4] == 1:  # Check if classifier correctly classified as a dog
                 results_stats['n_correct_dogs'] += 1
-            if results[key][2] == 1:  # Check if there was a match between pet and classifier labels
+            if results_dic[key][2] == 1:  # Check if there was a match between pet and classifier labels
                 results_stats_dic['n_correct_breed'] += 1
         else:  # Pet image is not a dog
             results_stats['n_notdogs_img'] += 1
