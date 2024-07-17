@@ -21,8 +21,8 @@
 #
 ##
 # Imports classifier function for using CNN to classify images 
-from classifier import classifier 
 import os
+from classifier import classifier 
 
 # TODO 3: Define classify_images function below, specifically replace the None
 #       below by the function definition of the classify_images function. 
@@ -66,12 +66,31 @@ def classify_images(images_dir, results_dic, model):
      Returns:
            None - results_dic is mutable data type so no return needed.         
     """
-    for image_file in results_dic:
-      image_path=os.path.join(images_dir, image_file)
-      classifier_label=classifier(image_path,model).lower().strip()
-      real_label=results_dic[image_file][0]
-      prediction=1 if real_label in classifier_label else 0
-      results_dic[image_file].extend([classifier_label,prediction])
+    for key in results_dic:
+        # Create full path to image file
+        image_path = os.path.join(images_dir, key)
+        
+        # Print the path of the image being processed
+        print(f"Image Path: {image_path}")
 
-    
-    print(results_dic)
+        # Get the model label by calling the classifier function
+        model_label = classifier(image_path, model)
+        
+        # Print the raw output of the classifier function
+        print(f"Raw Classifier Output: {model_label}")
+
+        # Format the classifier label to match pet image label format
+        classifier_label = model_label.lower().strip()
+        
+        # Print the formatted classifier label
+        print(f"Formatted Classifier Label: {classifier_label}")
+
+        # Determine if there is a match between pet label and classifier label
+        truth = results_dic[key][0]
+        match = 1 if truth in classifier_label else 0
+        
+        # Update the results dictionary
+        results_dic[key].extend([classifier_label, match])
+        
+        # Print the updated results dictionary entry for the current image
+        print(f"Updated Results: {results_dic[key]}")
