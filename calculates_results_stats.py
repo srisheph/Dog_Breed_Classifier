@@ -42,7 +42,7 @@
 #       in the return statement with the results_stats_dic dictionary that you create 
 #       with this function
 # 
-def calculates_results_stats(results):
+def calculates_results_stats(results_dic):
     """
     Calculates statistics of the results of the program run using classifier's model 
     architecture to classifying pet images. Then puts the results statistics in a 
@@ -70,40 +70,34 @@ def calculates_results_stats(results):
     """        
     # Replace None with the results_stats_dic dictionary that you created with 
     # this function 
-    results_stats_dic = {
+    results_stats= {
         'n_images': len(results),
         'n_dogs_img': 0,
         'n_correct_dogs': 0,
+        'n_match': 0,
         'n_notdogs_img': 0,
         'n_correct_notdogs': 0,
         'n_correct_breed': 0,
     }
 
     # Calculate the statistics
-    for key in results:
-        if results[key][3] == 1:  # Check if pet image is a dog
-            results_stats_dic['n_dogs_img'] += 1
-            if results[key][4] == 1:  # Check if classifier correctly classified as a dog
-                results_stats_dic['n_correct_dogs'] += 1
+    for key in results_dic:
+        results_stats['n_images']+=1
+        if results_dic[key][3] == 1:  # Check if pet image is a dog
+            results_stats['n_dogs_img'] += 1
+            if results_dic[key][4] == 1:  # Check if classifier correctly classified as a dog
+                results_stats['n_correct_dogs'] += 1
             if results[key][2] == 1:  # Check if there was a match between pet and classifier labels
                 results_stats_dic['n_correct_breed'] += 1
         else:  # Pet image is not a dog
-            results_stats_dic['n_notdogs_img'] += 1
-            if results[key][4] == 0:  # Check if classifier correctly classified as not a dog
-                results_stats_dic['n_correct_notdogs'] += 1
+            results_stats['n_notdogs_img'] += 1
+            if results_dic[key][4] == 0:  # Check if classifier correctly classified as not a dog
+                results_stats['n_correct_notdogs'] += 1
+        if results_dic[key][2]==1:
+            results_stats['n_match']+=1
 
-    # Avoid division by zero by checking if there are dog images
-    if results_stats_dic['n_dogs_img'] > 0:
-        results_stats_dic['pct_correct_dogs'] = (results_stats_dic['n_correct_dogs'] / results_stats_dic['n_dogs_img']) * 100
-        results_stats_dic['pct_correct_breed'] = (results_stats_dic['n_correct_breed'] / results_stats_dic['n_dogs_img']) * 100
-    else:
-        results_stats_dic['pct_correct_dogs'] = 0.0
-        results_stats_dic['pct_correct_breed'] = 0.0
+    results_stats['pct_correct_dogs'] = (results_stats['n_correct_dogs'] / results_stats['n_dogs_img']) * 100
+    results_stats['pct_correct_breed'] = (results_stats['n_correct_breed'] / results_stats['n_dogs_img']) * 100
+    results_stats['pct_correct_notdogs'] = (results_stats['n_correct_notdogs'] / results_stats['n_notdogs_img']) * 100
 
-    # Avoid division by zero by checking if there are non-dog images
-    if results_stats_dic['n_notdogs_img'] > 0:
-        results_stats_dic['pct_correct_notdogs'] = (results_stats_dic['n_correct_notdogs'] / results_stats_dic['n_notdogs_img']) * 100
-    else:
-        results_stats_dic['pct_correct_notdogs'] = 0.0
-
-    return results_stats_dic
+    return results_stats

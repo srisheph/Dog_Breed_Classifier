@@ -68,23 +68,22 @@ def adjust_results4_isadog(results_dic, dogfile):
     Returns:
            None - results_dic is mutable data type so no return needed.
     """ 
-    dognames = set()
+    dognames_dic = {}
     with open(dogfile, "r") as f:
         for line in f:
-            dognames.add(line.strip().lower())
+            dognames_dic[line.strip()]=1
 
     # Iterate through results_dic and adjust results for 'is-a-dog'/'not-a-dog'
-    for key, value in results_dic.items():
+    for key in results_dic:
         # Pet Image Label is a dog (e.g., found in dognames)
-        if value[0] in dognames:
-            value.append(1)
+        if results_dic[key][0] in dognames_dic:
+            results_dic[key].append(1)
         else:
-            value.append(0)
+            results_dic[key].append(0)
 
-        # Classifier Label is a dog (e.g., found in dognames)
-        classifier_labels = value[1].lower().split(', ')
-        if any(label in dognames for label in classifier_labels):
-            value.append(1)
+        
+        if results_dic[key][1] in dognames_dic:
+            results_dic[key].append(1)
         else:
-            value.append(0) 
+            results_dic[key].append(0) 
      

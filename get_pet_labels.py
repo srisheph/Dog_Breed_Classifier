@@ -17,7 +17,7 @@
 #
 ##
 # Imports python modules
-from os import listdir
+import os
 
 # TODO 2: Define get_pet_labels function below please be certain to replace None
 #       in the return statement with results_dic dictionary that you create 
@@ -42,40 +42,11 @@ def get_pet_labels(image_dir):
     """
     # Replace None with the results_dic dictionary that you created with this
     # function
-    filename_list=listdir(image_dir)
-    print('\n10 filenames from folder pet_images')
-    pet_labels=[]
-    results_dic=dict()
-    for index in range(0, len(filename_list),1):
-      if filename_list[index][0] != ".":
-        pet_label=''
-        pet_image_filename= filename_list[index]
-        word_list_pet_image_filename=pet_image_filename.lower().split('_')
-        pet_name= ''
-
-        for word in word_list_pet_image_filename:
-          if word.isalpha():
-            pet_name+= word +" "
-
-        pet_name=pet_name.strip()
-        print('Filename = ', pet_image_filename, '  label = ',pet_name)
-
-        print('\n{:2d} file: {:>25}'.format(index +1, filename_list[index]))
-
-        number_of_items_empty_dic=len(results_dic)
-
-        print('\nEmpty dictionary has {} items'.format(number_of_items_empty_dic))
-
-        if filename_list[index] not in results_dic:
-          results_dic[filename_list[index]]=[pet_name]
-        else:
-          print('\nWARNING: key =',filenames[index], 'already exists in results_dic with value =', results_dic[filenames[index]])
-
-    print('\nPrinting all key-value pairs in dictionary results_dic:')
-    for key in results_dic:
-      print('\nfilename = ',key,' pet label = ',results_dic[key][0])
-
-    number_of_items_full_dic= len(results_dic)
-    print('\nEmpty dictioary has {} items'.format(number_of_items_full_dic))
-
+    results_dic={}
+    for filename in os.listdir(image_dir):
+      if filename.startswith('.'):
+        continue
+      label=filename.lower().split('_')
+      label=' '.join([word for word in label if word.isalpha()])
+      results_dic[filename]=[label]
     return results_dic
