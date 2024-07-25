@@ -74,16 +74,16 @@ def adjust_results4_isadog(results_dic, dogfile):
             dognames_dic[line.strip()]=1
 
     # Iterate through results_dic and adjust results for 'is-a-dog'/'not-a-dog'
-    for key in results_dic:
+    for value in results_dic.values():
         # Pet Image Label is a dog (e.g., found in dognames)
-        if results_dic[key][0] in dognames_dic:
-            results_dic[key].append(1)
+        if value[0] in dognames_dic:
+            value.append(1)
         else:
-            results_dic[key].append(0)
+            value.append(0)
 
         
-        if results_dic[key][1] in dognames_dic:
-            results_dic[key].append(1)
+        if value[1] in dognames_dic:
+            value.append(1)
         else:
-            results_dic[key].append(0) 
+            value.append(0) 
      

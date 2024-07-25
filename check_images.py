@@ -28,7 +28,7 @@
 from time import time, sleep
 
 # Imports print functions that check the lab
-
+from print_functions_for_lab_checks import *
 
 # Imports functions created for this program
 from get_input_args import get_input_args
@@ -54,7 +54,7 @@ def main():
     in_arg = get_input_args()
 
       
-
+    check_command_line_arguments(in_arg)
     
     # TODO 2: Define get_pet_labels function within the file get_pet_labels.py
     # Once the get_pet_labels function has been defined replace 'None' 
@@ -65,7 +65,7 @@ def main():
     # this dictionary is returned from the function call as the variable results
     results = get_pet_labels(in_arg.dir)
 
-    
+    check_creating_pet_image_labels(results)
 
 
     # TODO 3: Define classify_images function within the file classiy_images.py
@@ -78,7 +78,7 @@ def main():
     # and adds these results to the results dictionary - results
     classify_images(in_arg.dir, results, in_arg.arch)
 
-    
+    check_classifying_images(results)
 
     
     # TODO 4: Define adjust_results4_isadog function within the file adjust_results4_isadog.py
@@ -91,7 +91,7 @@ def main():
     # model can correctly classify dog images as dogs (regardless of breed)
     adjust_results4_isadog(results, in_arg.dogfile)
 
-    
+    check_classifying_labels_as_dogs(results)
 
 
     # TODO 5: Define calculates_results_stats function within the file calculates_results_stats.py
@@ -101,6 +101,7 @@ def main():
     # Calculates results of run and puts statistics in the Results Statistics
     # Dictionary - called results_stats
     results_stats = calculates_results_stats(results)
+    check_calculating_results(results,results_stats)
 
   
 

@@ -80,19 +80,16 @@ def print_results(results_dic, results_stats, model,
           != results_stats['n_images'] ) ):
         print("\nINCORRECT Dog/NOT Dog Assignments:")
         for key in results_dic:
-            if (results_dic[key][2] == 1 and results_dic[key][3] == 0) or \
-               (results_dic[key][2] == 0 and results_dic[key][3] == 1):
+            if (results_dic[key][3] == 1 and results_dic[key][4] == 0) or (results_dic[key][3] == 0 and results_dic[key][4] == 1):
                 print("Real: %-26s Classifier: %-30s" % (results_dic[key][0], results_dic[key][1]))
 
     # If print_incorrect_breed == True AND there were dogs whose breeds were 
     # incorrectly classified - print out these cases
-    if (print_incorrect_breed and 
-        (results_stats['n_correct_dogs'] != results_stats['n_correct_breed']) 
-       ):
+    if print_incorrect_breed and (results_stats['n_correct_dogs'] != results_stats['n_correct_breed']) :
         print("\nINCORRECT Dog Breed Assignment:")
         for key in results_dic:
-            if ( results_dic[key][2] == 1 and results_dic[key][3] == 1 and
-                results_dic[key][0] != results_dic[key][1] ):
+            if ( results_dic[key][3] == 1 and results_dic[key][4] == 1 and
+                results_dic[key][2]==0 ):
                 print("Real: %-26s Classifier: %-30s" % (results_dic[key][0], results_dic[key][1]))
 
 
